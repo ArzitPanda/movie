@@ -14,9 +14,7 @@ public class TestController {
     @GetMapping
     public ResponseEntity<String> test()
     {
-
         return  ResponseEntity.ok("tested ok nice");
-
 
     }
 
