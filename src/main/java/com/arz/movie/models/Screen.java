@@ -1,6 +1,7 @@
 package com.arz.movie.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,11 +21,11 @@ public class Screen {
 
     private String ScreenName;
 
-    @OneToMany(mappedBy = "screen")
+    @OneToMany(mappedBy = "screen",cascade = CascadeType.ALL)
     private List<Seat> seats;
 
-
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.DETACH)
     private  MovieHall movieHall;
 
 

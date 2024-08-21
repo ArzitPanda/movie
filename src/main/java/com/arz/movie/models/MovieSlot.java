@@ -23,10 +23,9 @@ public class MovieSlot {
     private  Screen screen;
 
 
-
-
     private LocalDateTime showStartDateAndTime;
-    List<Long> avaliableSeats =new ArrayList<>();
+
+    List<Long> unavaliableSeats =new ArrayList<>();
 
 
 }

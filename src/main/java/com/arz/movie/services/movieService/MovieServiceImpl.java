@@ -7,6 +7,7 @@ import com.arz.movie.dtos.movies.MovieRequest;
 import com.arz.movie.dtos.movies.MovieResponse;
 import com.arz.movie.models.Cast;
 import com.arz.movie.models.Movie;
+import com.arz.movie.models.Review;
 import com.arz.movie.repositories.CastRepository;
 
 import com.arz.movie.repositories.MovieRepository;
@@ -52,6 +53,8 @@ public class MovieServiceImpl implements MovieService {
     public MovieResponse getMovieById(Long id) {
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Movie not found"));
+
+
         return mapToResponse(movie);
     }
 
@@ -88,17 +91,17 @@ public class MovieServiceImpl implements MovieService {
     private MovieResponse mapToResponse(Movie movie) {
         MovieResponse movieResponse = modelMapper.map(movie, MovieResponse.class);
 
-        // Convert byte[] to Base64 encoded string
+
         movieResponse.setImageBase64(movie.getImages() != null ? Base64.getEncoder().encodeToString(movie.getImages()) : null);
         movieResponse.setTrailerBase64(movie.getTrailer() != null ? Base64.getEncoder().encodeToString(movie.getTrailer()) : null);
 
         movieResponse.setCastNames(movie.getCasts().stream().map((element) -> modelMapper.map(element, CastResponse.class))
                 .collect(Collectors.toList()));
 
+
+
         if(movie.getReviews()!=null )
-        movieResponse.setReviewComments(movie.getReviews().stream()
-                .map(review -> review)
-                .collect(Collectors.toList()));
+        movieResponse.setReviewComments(movie.getReviews());
         else
             movieResponse.setReviewComments(new ArrayList<>());
 

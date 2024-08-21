@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -33,9 +35,23 @@ public class Movie {
     @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     private List<Cast> casts;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private  List<Review> reviews;
 
 
-
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", movieType='" + movieType + '\'' +
+                ", movieLanguage='" + movieLanguage + '\'' +
+                ", durationInSeconds=" + durationInSeconds +
+                ", genre=" + Arrays.toString(genre) +
+                ", releasedDate=" + releasedDate +
+                ", description='" + description + '\'' +
+                ", reviews=" + reviews +
+                ", casts=" + casts +
+                '}';
+    }
 }

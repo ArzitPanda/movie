@@ -3,9 +3,7 @@ package com.arz.movie.dtos.movies;
 import com.arz.movie.dtos.casts.CastResponse;
 import com.arz.movie.models.Cast;
 import com.arz.movie.models.Review;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +11,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class MovieResponse {
     private Long id;
     private String name;

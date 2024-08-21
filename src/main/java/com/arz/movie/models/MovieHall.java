@@ -1,9 +1,6 @@
 package com.arz.movie.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,10 +21,10 @@ public class MovieHall {
     private String address;
     private Long pincode;
 
-    @OneToMany(mappedBy = "movieHall")
+    @OneToMany(mappedBy = "movieHall",cascade = CascadeType.ALL)
     private List<Screen> screens;
 
-    @OneToMany(mappedBy = "movieHallAttached")
+    @OneToMany(mappedBy = "movieHallAttached",cascade = CascadeType.ALL)
     private  List<RunningShow> runningShows;
 
 
