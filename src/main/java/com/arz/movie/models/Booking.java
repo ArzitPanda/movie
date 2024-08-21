@@ -20,17 +20,16 @@ public class Booking {
     @GeneratedValue
     private  Long id;
 
-    @OneToOne
-    private MovieHall movieHall;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private  User user;
 
     private Status status;
-    @OneToOne
-    private  Movie movie;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private  MovieSlot movieSlot;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Seat> seats;
 
     private double price;

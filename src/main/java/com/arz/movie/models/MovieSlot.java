@@ -25,6 +25,7 @@ public class MovieSlot {
 
     private LocalDateTime showStartDateAndTime;
 
+    @ElementCollection
     List<Long> unavaliableSeats =new ArrayList<>();
 
 

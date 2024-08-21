@@ -1,8 +1,13 @@
 package com.arz.movie.models.enums;
 
 public enum Status {
-    CONFIRM,
+    ONLY_CLICK_ON_SEATS,
+    DESELECTED,
+    CLICKED_PAYMENT_METHOD,
     PENDING,
-    REJECTED,
-    WAITING
+    CANCELLED,
+
+    BOOKED,
+
+
 }
