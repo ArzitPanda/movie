@@ -30,6 +30,7 @@ public class ScreenServiceImpl implements  ScreenService{
     public String createScreen(ScreenRequest screenRequest) {
         Screen screen =new Screen();
         screen.setScreenName(screenRequest.getScreenName());
+        screen.setDefaultPrice(screenRequest.getDefaultPrice());
 
 
        MovieHall hall = movieHallRepository.findById(screenRequest.getHallId()).get();

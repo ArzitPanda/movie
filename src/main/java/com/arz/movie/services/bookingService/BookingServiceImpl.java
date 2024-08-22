@@ -37,8 +37,23 @@ public class BookingServiceImpl implements BookingService {
     public BookingResponseDto createBooking(BookingRequestDto bookingRequestDto) {
         Booking booking = new Booking();
 
+
+
         booking.setUser(userRepository.findById(bookingRequestDto.getUserId()).orElseThrow(() -> new RuntimeException("User not found")));
-        booking.setMovieSlot(movieSlotRepository.findById(bookingRequestDto.getMovieSlotId()).orElseThrow(() -> new RuntimeException("MovieSlot not found")));
+        MovieSlot movieSlot =(movieSlotRepository.findById(bookingRequestDto.getMovieSlotId()).orElseThrow(() -> new RuntimeException("MovieSlot not found")));
+        bookingRequestDto.getSeatIds().stream().forEach(ele->{
+               if( movieSlot.getUnavaliableSeats().contains(ele))
+               {
+                   throw  new RuntimeException("seats are not available");
+               }
+        });
+
+
+        movieSlot.getUnavaliableSeats().addAll(bookingRequestDto.getSeatIds());
+
+
+        MovieSlot savedMovieSlot = movieSlotRepository.save(movieSlot);
+        booking.setMovieSlot(savedMovieSlot);
         booking.setSeats(bookingRequestDto.getSeatIds().stream().map(id -> seatRepository.findById(id).orElseThrow(() -> new RuntimeException("Seat not found"))).collect(Collectors.toList()));
         booking.setPrice(bookingRequestDto.getPrice());
         booking.setQuantity(bookingRequestDto.getQuantity());
@@ -63,11 +78,11 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public BookingResponseDto updateBookingStatus(Long id, Status status) {
         Booking booking = bookingRepository.findById(id).orElseThrow(() -> new RuntimeException("Booking not found"));
-        MovieSlot movieSlot = booking.getMovieSlot();
+        MovieSlot movieSlot = movieSlotRepository.findById(booking.getMovieSlot().getId()).orElseThrow(() -> new RuntimeException("MovieSlot not found"));
         switch (status)
         {
             case BOOKED,CLICKED_PAYMENT_METHOD,ONLY_CLICK_ON_SEATS:
-                movieSlot.getUnavaliableSeats().addAll(booking.getSeats().stream().map(ele->ele.getId()).toList());
+              //  movieSlot.getUnavaliableSeats().addAll(booking.getSeats().stream().map(ele->ele.getId()).toList());
                 break;
 
             case CANCELLED,PENDING,DESELECTED:
@@ -78,10 +93,6 @@ public class BookingServiceImpl implements BookingService {
                 break;
 
         }
-
-
-        booking.setUser(booking.getUser());
-        booking.setSeats(booking.getSeats());
         booking.setStatus(status);
         movieSlotRepository.save(movieSlot);
         Booking updatedBooking = bookingRepository.save(booking);

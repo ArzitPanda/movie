@@ -28,4 +28,7 @@ public class MovieHall {
     private  List<RunningShow> runningShows;
 
 
+
+
+
 }
