@@ -23,12 +23,17 @@ public class UserServiceImpl implements  UserService{
     private ModelMapper mapper;
 
     @Override
-    public UserResponse createUser(UserRequest user) throws EntityPresentException {
+    public UserResponse createUser(UserRequest user,String oauthId) throws EntityPresentException {
 
         User userOne =mapper.map(user,User.class);
+        userOne.setOauthId(oauthId);
       if(userRepository.existsByMobileNumberIgnoreCase(user.getMobileNumber()))
       {
         throw  new EntityPresentException("User");
+      }
+      if(userRepository.existsByOauthId(userOne.getOauthId()))
+      {
+          throw  new EntityPresentException("User");
       }
 
 

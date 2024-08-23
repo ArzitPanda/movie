@@ -7,7 +7,7 @@ import com.arz.movie.exceptions.EntityPresentException;
 
 public interface UserService {
 
-    UserResponse createUser(UserRequest user) throws EntityPresentException;
+    UserResponse createUser(UserRequest user,String oauthId) throws EntityPresentException;
     UserResponse getUserById(Long userId) throws EntityNotFound;
 
 

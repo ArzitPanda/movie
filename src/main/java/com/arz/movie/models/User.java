@@ -29,6 +29,8 @@ public class User {
 
     private Gender gender;
 
+    private  String oauthId;
+
 
 
 }
